@@ -1,0 +1,38 @@
+header {
+  background-color: rgb(103, 196, 225);
+  height: 100px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+header ul {
+  display: flex;
+  color: white;
+  list-style: none;
+}
+
+header ul li {
+  font-size: 40px;
+  margin-left: 1em;
+}
+
+header ul li:hover {
+  color: rgb(55, 55, 55);
+  cursor: pointer;
+}
+
+body {
+  position: relative;
+  height: 900px;
+}
+
+main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+}
