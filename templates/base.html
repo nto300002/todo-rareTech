@@ -4,10 +4,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  {% block head %}{% endblock %}
+  <link rel="stylesheet" href="../static/base.css">
+  {% block head %}
+  {% endblock %}
 </head>
 <body>
-  {% block body %}{% endblock %}
+  <header>
+    <ul>
+      <li>ホーム</li>
+      <li>ログオフ</li>
+      <li>ユーザー画面</li>
+    </ul>
+  </header>
+  <main>
+  {% block main %}
+  {% endblock %}
+</main>
 </body>
 </html>

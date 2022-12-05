@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -10,8 +10,8 @@ mysql.init_app(app)
 
 
 @app.route('/')
-def hello():
-    return '<h1>Hello World</h1>'
+def index():
+    return render_template('index.html')
 
 
 @app.route('/user', methods=['GET', 'POST'])
