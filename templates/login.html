@@ -4,5 +4,14 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-    <p>login</p>
+
+    <form action="" method="get" class="form-example">
+      <h1>ログインしてください</h1>
+      <input type="email" name="email" id="email" placeholder="メールアドレスを入力" required>
+      <input type="password" name="password" id="password" placeholder="パスワードを入力" required>
+      <input type="submit" value="ログイン" class="submit">
+      <!-- user_todo ログイン未完了のときに出る -->
+      <h2>ログイン未完了です</h2>
+    </form>
+    
 {% endblock %}
