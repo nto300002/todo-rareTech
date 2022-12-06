@@ -13,6 +13,30 @@ mysql.init_app(app)
 def index():
     return render_template('index.html')
 
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/user_todo')
+def user_todo():
+    return render_template('user_todo.html')
+
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
+
+@app.route('/create')
+def create():
+    return render_template('create.html')
+
+@app.route('/edit')
+def edit():
+    return render_template('edit.html')
+
 
 @app.route('/user', methods=['GET', 'POST'])
 def CONNECT_DB():
