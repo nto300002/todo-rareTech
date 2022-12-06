@@ -1,0 +1,31 @@
+h1 {
+  color: red;
+  font-size: 40px;
+}
+
+.index_ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.index_li {
+  margin: 1em;
+}
+
+.index_btn {
+  background-color: rgb(103, 196, 225);
+  color: white;
+  font-size: 30px;
+  border-style: none;
+  border-radius: 10px;
+  width: 250px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.index_btn:hover {
+  color: rgb(55, 55, 55);
+}
