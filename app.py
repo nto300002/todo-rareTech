@@ -13,6 +13,10 @@ mysql.init_app(app)
 def index():
     return render_template('index.html')
 
+@app.route('/index_nologin')
+def index_nologin():
+    return render_template('index_nologin.html')
+
 @app.route('/register')
 def register():
     return render_template('register.html')
