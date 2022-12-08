@@ -4,5 +4,12 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-    <p>edit</p>
+<form action="" method="post" class="form-example">
+  <h1>やること</h1>
+  <textarea name="title" id="title" cols="36" placeholder="タイトルを入力" >{title}</textarea>
+  <h1>やることの詳細</h1>
+  <textarea id="detail" name="story"
+  rows="7" cols="36" placeholder="内容を入力">{detail}</textarea>
+  <input type="submit" value="完了" class="submit">
+</form>
 {% endblock %}

@@ -1,0 +1,41 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form h1 {
+  color: rgb(77, 77, 77);
+  margin-right: 7em;
+}
+
+form h1:first-child {
+  margin-right: 10em;
+}
+
+input {
+  font-size: 30px;
+  width: 450px;
+  height: 55px;
+  margin-bottom: 1em;
+  border: 0.5px solid rgb(149, 154, 160);
+}
+
+textarea {
+  resize: none;
+  font-size: 22px;
+  border: 0.5px solid rgb(149, 154, 160);
+}
+
+.submit {
+  background-color: rgb(40, 186, 0);
+  color: white;
+  font-size: 30px;
+  border-style: none;
+  border-radius: 10px;
+  width: 90%;
+  height: 50px;
+  margin-top: 1em;
+  cursor: pointer;
+}
