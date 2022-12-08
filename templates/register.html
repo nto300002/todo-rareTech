@@ -4,5 +4,12 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-    <p>register</p>
+<form action="" method="post" class="form-example">
+  <h1>登録してください</h1>
+  <input type="text" name="name" id="name" placeholder="名前を入力" required>
+  <input type="email" name="email" id="email" placeholder="メールアドレスを入力" required>
+  <input type="password" name="password" id="password" placeholder="パスワードを入力" required>
+  <input type="password" name="password" id="password" placeholder="確認パスワードを入力" required>
+  <input type="submit" value="登録" class="submit">
+</form>
 {% endblock %}
