@@ -4,12 +4,26 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-<form action="" method="post" class="form-example">
+
+<form action="" method="POST" class="form-example">
   <h1>登録してください</h1>
   <input type="text" name="name" id="name" placeholder="名前を入力" required>
   <input type="email" name="email" id="email" placeholder="メールアドレスを入力" required>
   <input type="password" name="password" id="password" placeholder="パスワードを入力" required>
-  <input type="password" name="password" id="password" placeholder="確認パスワードを入力" required>
-  <input type="submit" value="登録" class="submit">
+  <input type="password" name="confirm" placeholder="確認パスワードを入力" oninput="CheckPassword(this)" required>
+  <input type="submit" value="登録" class="submit" > 
+  <!-- onclick="CheckPassword(this)" -->
 </form>
+<script>
+  function CheckPassword(confirm){
+    var input1 = password.value
+    var input2 = confirm.value
+    if(input1 != input2){
+      // alert('passwordが一致しません')
+      confirm.setCustomValidity('passwordが一致しません')
+    }else{
+      confirm.setCustomValidity('');
+    }
+  }
+</script>
 {% endblock %}
