@@ -17,7 +17,7 @@ def index():
 def index_nologin():
     return render_template('index_nologin.html')
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register():
     return render_template('register.html')
 
