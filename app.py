@@ -3,8 +3,6 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-app.config['MYSQL_PORT'] = 3306
-
 mysql = MySQL()
 mysql.init_app(app)
 
@@ -17,8 +15,18 @@ def index():
 def index_nologin():
     return render_template('index_nologin.html')
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
+    # if request.method == 'POST':
+    #     name = request.form['name']
+    #     email = request.form['email']
+    #     password = request.form['password']
+    #     cursor = mysql.connection.cursor()
+    #     cursor.execute('''USE tododb''')
+    #     cursor.execute(''' INSERT INTO users VALUES(%s,%s,%s, NULL, NULL) ''',(name, email, password))
+    #     mysql.connection.commit()
+    #     cursor.close()
+    #     return f"ユーザーを登録しました"
     return render_template('register.html')
 
 @app.route('/login')
