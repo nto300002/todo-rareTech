@@ -1,7 +1,27 @@
+import datetime
+from datetime import timedelta
+import secrets
+from nis import match
+from turtle import title
 from flask_mysqldb import MySQL
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
+from passlib.hash import sha256_crypt
+from forms import RegistrationForm
+from access_control import login_required, for_guests
 
 app = Flask(__name__)
+
+app.permanent_session_lifetime = timedelta(minutes=5)
+secret = secrets.token_urlsafe(32)
+#環境設定を読み込む 
+app.config.from_object(__name__)
+app.config.update(dict(
+  MYSQL_HOST='localhost',
+  MYSQL_USER='yasuda',
+  MYSQL_PASSWORD='fjei34',
+  MYSQL_DB='tododb',
+  SECRET_KEY=secret
+))
 
 mysql = MySQL()
 mysql.init_app(app)
@@ -9,25 +29,52 @@ mysql.init_app(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title="Top")
 
 @app.route('/index_nologin')
 def index_nologin():
     return render_template('index_nologin.html')
 
 @app.route('/register', methods=['GET','POST'])
+@for_guests
 def register():
-    # if request.method == 'POST':
-    #     name = request.form['name']
-    #     email = request.form['email']
-    #     password = request.form['password']
-    #     cursor = mysql.connection.cursor()
-    #     cursor.execute('''USE tododb''')
-    #     cursor.execute(''' INSERT INTO users VALUES(%s,%s,%s, NULL, NULL) ''',(name, email, password))
-    #     mysql.connection.commit()
-    #     cursor.close()
-    #     return f"ユーザーを登録しました"
-    return render_template('register.html')
+    form = RegistrationForm(request.form)
+    if request.method == "POST" and form.validate():
+        #ユーザーデータ取得
+        username = form.username.data
+        email = form.email.data
+        password = sha256_crypt.encrypt(str(form.password.data))
+        create_at = datetime.datetime.today()
+        
+        #データベースのクエリを生成
+        curr = mysql.connection.cursor()
+
+        #データベースを選択
+        curr.execute('''USE tododb''')
+
+        #ユーザーネームが登録されているか確認
+        matches = curr.execute("SELECT * FROM users WHERE username = %s", (username,))
+        if matches:
+            return render_template("register.html", title="新規登録", form=form, err="ユーザーネームはすでに登録されています")
+        
+        #メールアドレスが登録されているか確認
+        matches = curr.execute("SELECT * FROM users WHERE email = %s", (email,))
+        if matches:
+            return render_template("register.html", title="新規登録", form=form, err="メールアドレスはすでに登録されています")
+
+        #データベースにユーザーデータを保存
+        curr.execute("INSERT INTO users(username, email, password, create_at) VALUES(%s, %s, %s, %s)", (username, email, password, create_at))
+
+        #データベースの接続を終了
+        mysql.connection.commit()
+        curr.close()
+
+        #ユーザーをリダイレクトする
+        flash("アカウントを作成しました", "success")
+        return redirect(url_for("user_todo"))
+
+        
+    return render_template('register.html', title="新規作成", form=form)
 
 @app.route('/login')
 def login():
