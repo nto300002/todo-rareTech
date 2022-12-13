@@ -1,20 +1,26 @@
 {% extends 'layouts/base.html' %}
 {% block head %}
-<link rel="stylesheet" href="../static/register.css">
-<title>やさしいおぼえがき</title>
+<title>{{title}} | やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
 
+{% from './includes/_formhelpers.html' import render_field %}
+{% if err %}
+<div class="alert-error">{{err}}</div>
+{% endif %}
 <form action="" method="POST" class="form-example">
   <h1>登録してください</h1>
-  <input type="text" name="name" id="name" placeholder="名前を入力" required>
-  <input type="email" name="email" id="email" placeholder="メールアドレスを入力" required>
-  <input type="password" name="password" id="password" placeholder="パスワードを入力" required>
-  <input type="password" name="confirm" placeholder="確認パスワードを入力" oninput="CheckPassword(this)" required>
+   
+    {{ render_field(form.username, class_="input") }}
+
+    {{ render_field(form.email, class_="input") }}
+
+    {{ render_field(form.password, class_="input") }}
+
+    {{ render_field(form.confirm, class_="input") }}
   <input type="submit" value="登録" class="submit" > 
-  <!-- onclick="CheckPassword(this)" -->
 </form>
-<script>
+<!-- <script>
   function CheckPassword(confirm){
     var input1 = password.value
     var input2 = confirm.value
@@ -25,5 +31,5 @@
       confirm.setCustomValidity('');
     }
   }
-</script>
+</script> -->
 {% endblock %}
