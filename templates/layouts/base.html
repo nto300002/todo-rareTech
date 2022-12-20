@@ -13,9 +13,13 @@
 <body>
   <header>
     <ul>
-      <li>ホーム</li>
-      <li>ログオフ</li>
-      <li>ユーザー画面</li>
+      <li><a href="/">ホーム</a></li>
+      {% if session.logged_in %}
+      <li><a href="/logout">ログオフ</a></li>
+      {% else %}
+      <li><a href="/login">ログイン</a></li>
+      {% endif %}
+      <li><a href="/user_todo">ユーザー画面</a></li>
     </ul>
   </header>
   <main>

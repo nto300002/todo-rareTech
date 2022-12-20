@@ -4,6 +4,7 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
+    {% if session.logged_in %}
     <div>
       <button><a href="/create">新規作成</a></button>
       <ul class="user_todo-ul">
@@ -29,5 +30,8 @@
         </li>
       </ul>
     </div>
+    {% else %}
+    <h1>ログインすることでご利用いただけます</h1>
+    {% endif %}
 
 {% endblock %}
