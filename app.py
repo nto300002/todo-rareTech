@@ -101,6 +101,7 @@ def login():
                 #セッションを保存する
                 session['logged_in'] = True
                 session['email'] = user_data['email']
+                session['username'] = user_data['username']
 
                 #todo一覧へリダイレクト
                 flash("Login success.", "success")

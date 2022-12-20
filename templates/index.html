@@ -4,6 +4,9 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-    <h1>ようこそ{username}さん！</h1>
-    <a href="/index_nologin">nologin</a>
+    {% if session.logged_in %}
+    <h1>ようこそ{{session['username']}}さん！</h1>
+    {% else %}
+    <p>ログインしてください</p>
+    {% endif %}
 {% endblock %}
