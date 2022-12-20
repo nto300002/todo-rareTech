@@ -3,11 +3,13 @@ from datetime import timedelta
 import secrets
 from nis import match
 from turtle import title
-from flask_mysqldb import MySQL
+from unittest import result
+from flask_mysqldb import MySQL, MySQLdb
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
 from passlib.hash import sha256_crypt
 from forms import RegistrationForm
 from access_control import login_required, for_guests
+
 
 app = Flask(__name__)
 
@@ -76,9 +78,47 @@ def register():
         
     return render_template('register.html', title="新規作成", form=form)
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
+@for_guests
 def login():
-    return render_template('login.html')
+    if request.method == "POST":
+        #ユーザーデータをフォームから取得
+        email = request.form['email']
+        plain_pw = request.form['password']
+
+        #カーソルを作成しDBに問い合わせる
+        curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        result = curr.execute("SELECT * FROM users WHERE email=%s", (email,))
+
+        #合致しているかチェック
+        if result:
+            #クエリの結果からユーザーデータを保存する
+            user_data = curr.fetchone()
+            hashed_pw = user_data['password']
+        
+            #パスワードのバリデーション
+            if sha256_crypt.verify(plain_pw, hashed_pw):
+                #セッションを保存する
+                session['logged_in'] = True
+                session['email'] = user_data['email']
+                session['username'] = user_data['username']
+
+                #todo一覧へリダイレクト
+                flash("Login success.", "success")
+                return redirect(url_for("user_todo"))
+        
+        return render_template('login.html', title="Login", err='ログインが無効です')
+
+    return render_template('login.html', title="Login")
+
+# Route for the logout page.
+@app.route("/logout")
+@login_required
+def logout():
+    # Clear the user session then redirect them to login page.
+    session.clear()
+    flash("You are now logged out.", "info")
+    return redirect(url_for("login"))
 
 @app.route('/user_todo')
 def user_todo():
