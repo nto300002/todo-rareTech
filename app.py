@@ -7,7 +7,7 @@ from unittest import result
 from flask_mysqldb import MySQL, MySQLdb
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
 from passlib.hash import sha256_crypt
-from forms import RegistrationForm
+from forms import RegistrationForm, TaksForm
 from access_control import login_required, for_guests
 
 
@@ -120,17 +120,38 @@ def logout():
     flash("You are now logged out.", "info")
     return redirect(url_for("login"))
 
-@app.route('/user_todo')
+@app.route('/user_todo', methods=['GET', 'POST'])
+@login_required
 def user_todo():
-    return render_template('user_todo.html')
+    return render_template('user_todo.html', title='おぼえがき一覧')
 
 @app.route('/todo')
 def todo():
     return render_template('todo.html')
 
-@app.route('/create')
+@app.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
-    return render_template('create.html')
+    form = TaksForm(request.form)
+    if request.method == 'POST':
+        #タスクを取得する
+        title = form.title.data
+        detail = form.detail.data
+        created_at = datetime.datetime.today()
+
+        #カーソルを作成しDBに問い合わせる
+        curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curr.execute("INSERT INTO tasks(title, detail, created_at) VALUES(%s, %s, %s)", (title, detail, created_at))
+
+        #コミットしクローズする
+        mysql.connection.commit()
+        curr.close()
+
+        #フラッシュを表示し、todo一覧へ
+        flash('おぼえがきを追加', 'success')
+        return redirect(url_for('user_todo'))
+
+    return render_template('create.html', title='おぼえがきを追加', form=form)
 
 @app.route('/edit')
 def edit():

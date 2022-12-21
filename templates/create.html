@@ -4,11 +4,11 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-<form action="" method="post" class="form-example">
+{% from "includes/_formhelpers.html" import render_field %}
+<form action="" method="POST" class="form-example">
   <h1>新規作成</h1>
-  <input type="text" name="title" id="title" placeholder="タイトルを入力" required>
-  <textarea id="detail" name="story"
-  rows="7" cols="36" placeholder="内容を入力"></textarea>
+  {{ render_field(form.title, class='input')}}
+  {{ render_field(form.detail)}}
   <input type="submit" value="新規作成" class="submit">
 </form>
 {% endblock %}
