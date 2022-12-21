@@ -123,7 +123,12 @@ def logout():
 @app.route('/user_todo', methods=['GET', 'POST'])
 @login_required
 def user_todo():
-    return render_template('user_todo.html', title='おぼえがき一覧')
+    curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    curr.execute("SELECT * FROM tasks WHERE author=%s", (session['username'],))
+    tasks = curr.fetchall()
+    curr.close()
+
+    return render_template('user_todo.html', title='おぼえがき一覧', tasks = tasks)
 
 @app.route('/todo')
 def todo():
@@ -138,10 +143,11 @@ def create():
         title = form.title.data
         detail = form.detail.data
         created_at = datetime.datetime.today()
+        author = session['username']
 
         #カーソルを作成しDBに問い合わせる
         curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        curr.execute("INSERT INTO tasks(title, detail, created_at) VALUES(%s, %s, %s)", (title, detail, created_at))
+        curr.execute("INSERT INTO tasks(title, detail, created_at, author) VALUES(%s, %s, %s, %s)", (title, detail, created_at, author))
 
         #コミットしクローズする
         mysql.connection.commit()

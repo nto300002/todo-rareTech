@@ -4,34 +4,21 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
-    {% if session.logged_in %}
     <div>
       <button><a href="/create">新規作成</a></button>
+      {% if tasks %}
       <ul class="user_todo-ul">
+        {% for task in tasks %}
         <li class="user_todo-li">
-            <p>title</p>
-            <p class="ellipsis">detail</p>
+            <p>{{ task.title }}</p>
+            <p class="ellipsis">{{ task.detail }}</p>
             <a href="#">詳細はこちら</a>
         </li>
-        <li class="user_todo-li">
-            <p>title</p>
-            <p class="ellipsis">detaildetaildetaildetaildetaildetaildetaildetaildetaildetaildetaildetail</p>
-            <a href="#">詳細はこちら</a>
-        </li>
-        <li class="user_todo-li">
-            <p>title</p>
-            <p class="ellipsis">detail</p>
-            <a href="#">詳細はこちら</a>
-        </li>
-        <li class="user_todo-li">
-            <p>title</p>
-            <p class="ellipsis">detail</p>
-            <a href="#">詳細はこちら</a>
-        </li>
+        {% endfor %}
       </ul>
+      {% else %}
+      <p>おぼえがきがありません</p>
+      {% endif %}
     </div>
-    {% else %}
-    <h1>ログインすることでご利用いただけます</h1>
-    {% endif %}
 
 {% endblock %}
