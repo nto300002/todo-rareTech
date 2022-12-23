@@ -36,7 +36,6 @@ button a {
   padding: 2em 1em 2em 1em;
   border: 0.5px solid rgb(108, 108, 108);
   border-radius: 15px;
-  z-index: -50;
 }
 
 .ellipsis {

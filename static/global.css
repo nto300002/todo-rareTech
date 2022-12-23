@@ -9,6 +9,16 @@ h1 {
   color: rgb(77, 77, 77);
 }
 
+a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.pagelink {
+  color: brown;
+}
+
 .input {
   font-size: 22px;
   width: 450px;
