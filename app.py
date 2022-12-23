@@ -33,10 +33,6 @@ mysql.init_app(app)
 def index():
     return render_template('index.html', title="Top")
 
-@app.route('/index_nologin')
-def index_nologin():
-    return render_template('index_nologin.html')
-
 @app.route('/register', methods=['GET','POST'])
 @for_guests
 def register():
@@ -120,6 +116,7 @@ def logout():
     flash("You are now logged out.", "info")
     return redirect(url_for("login"))
 
+#一覧ページ
 @app.route('/user_todo', methods=['GET', 'POST'])
 @login_required
 def user_todo():
@@ -130,10 +127,18 @@ def user_todo():
 
     return render_template('user_todo.html', title='おぼえがき一覧', tasks = tasks)
 
-@app.route('/todo')
-def todo():
-    return render_template('todo.html')
+#詳細ページ
+@app.route('/todo/<int:id>', methods=['GET', 'POST'])   
+@login_required
+def todo(id):
+    curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    curr.execute("SELECT * FROM tasks WHERE id=%s", (id, ))
+    tasks = curr.fetchall()
+    curr.close()
 
+    return render_template('todo.html', title='おぼえがき', tasks=tasks[0])
+
+#todo作成ページ
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
@@ -158,6 +163,21 @@ def create():
         return redirect(url_for('user_todo'))
 
     return render_template('create.html', title='おぼえがきを追加', form=form)
+
+#削除処理
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+        curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curr.execute("DELETE from tasks WHERE id =%s", (id, ))
+
+        mysql.connection.commit()
+        curr.close()
+
+        flash("削除しました", "warning")
+        redirect(url_for("user_todo"))
+
+        return render_template('user_todo.html', title='おぼえがき一覧')
 
 @app.route('/edit')
 def edit():
