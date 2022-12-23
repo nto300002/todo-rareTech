@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, TextAreaField, PasswordField, SelectField, validators
+from wtforms import Form, StringField, TextAreaField, PasswordField, DateField, validators
 from wtforms.fields import EmailField
 
 class RegistrationForm(Form):
@@ -10,3 +10,4 @@ class RegistrationForm(Form):
 class TaksForm(Form):
     title = StringField("タイトル", [validators.Length(min=5, max=64), validators.DataRequired()])
     detail = TextAreaField("内容", [validators.Length(min=8, max=128), validators.DataRequired()])
+    end_time = DateField("期限", format='%Y/%m/%d')
