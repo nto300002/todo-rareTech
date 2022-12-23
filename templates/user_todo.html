@@ -7,15 +7,15 @@
     <div>
       <button><a href="/create">新規作成</a></button>
       {% if tasks %}
-      <ul class="user_todo-ul">
+      <div class="user_todo-ul">
         {% for task in tasks %}
-        <li class="user_todo-li">
+        <div class="user_todo-li">
             <p>{{ task.title }}</p>
             <p class="ellipsis">{{ task.detail }}</p>
-            <a href="#">詳細はこちら</a>
-        </li>
+            <a href="/todo/{{ task.id }}" class="pagelink">詳細はこちら</a>
+        </div> 
         {% endfor %}
-      </ul>
+    </div>
       {% else %}
       <p>おぼえがきがありません</p>
       {% endif %}
