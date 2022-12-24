@@ -5,7 +5,7 @@
 {% endblock %}
 {% block main %}
     {% if session.logged_in %}
-    <h1>ようこそ{{session['username']}}さん！</h1>
+    <h1>ようこそ<br />{{session['username']}}<br />さん！</h1>
     {% else %}
     <h1><a href='/login' class="pagelink">ログイン</a>してください</h1>
     <h1>または<a href='/register' class="pagelink">新規登録</a></h1>
