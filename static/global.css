@@ -46,3 +46,45 @@ textarea {
   margin-top: 1em;
   cursor: pointer;
 }
+
+.edit_btn {
+  background-color: rgb(40, 186, 0);
+  color: white;
+  font-size: 30px;
+  border-style: none;
+  border-radius: 10px;
+  width: 120px;
+  height: 50px;
+  margin-right: 1em;
+  cursor: pointer;
+}
+
+.delete_btn {
+  background-color: rgb(206, 61, 61);
+  color: white;
+  font-size: 30px;
+  border-style: none;
+  border-radius: 10px;
+  width: 120px;
+  height: 50px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  /* 480px以下に適用されるCSS（スマホ用） */
+  .input {
+    font-size: 22px;
+    width: 250px;
+    height: 55px;
+    margin: 10px;
+    border: 0.5px solid rgb(149, 154, 160);
+  }
+
+  textarea {
+    height: 200px;
+    width: 250px;
+    resize: none;
+    font-size: 22px;
+    border: 0.5px solid rgb(149, 154, 160);
+  }
+}

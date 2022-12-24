@@ -25,6 +25,7 @@ header ul li:hover {
 }
 
 body {
+  font-family: 'ヒラギノ丸ゴ ProN', 'ヒラギノ角ゴシック';
   position: relative;
   height: 900px;
 }
@@ -35,4 +36,19 @@ main {
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+@media screen and (max-width: 959px) {
+  /* 959px以下に適用されるCSS（タブレット用） */
+  header ul li {
+    font-size: 30px;
+    margin-left: 0.4em;
+  }
+}
+@media screen and (max-width: 480px) {
+  /* 480px以下に適用されるCSS（スマホ用） */
+  header ul li {
+    font-size: 22px;
+    margin-top: 0.7em;
+  }
 }
