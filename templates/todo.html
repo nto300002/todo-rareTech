@@ -4,14 +4,15 @@
 <title>やさしいおぼえがき</title>
 {% endblock %}
 {% block main %}
+    <p>作成日時　| {{ tasks.created_at }}</p>
     <h1>やること</h1>
     <p>{{ tasks.title }}</p>
     <h1>やることの詳細</h1>
     <p>{{ tasks.detail }}</p>
 
     <div>
-      <button class="edit_btn">編集</button>
-      <button class="delete_btn"><a href="/delete/{{ tasks.id }}" class="btn btn-danger fas fa-trash-alt" onclick="return confirm('この項目を削除します。よろしいですか？')">削除</a></button>
+      <button class="edit_btn"><a href="/edit/{{ tasks.id }}">編集</a></button>
+      <button class="delete_btn"><a href="/delete/{{ tasks.id }}" onclick="return confirm('この項目を削除します。よろしいですか？')">削除</a></button>
     </div>
 
 {% endblock %}
