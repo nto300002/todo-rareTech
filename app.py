@@ -168,20 +168,42 @@ def create():
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
-        curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        curr.execute("DELETE from tasks WHERE id =%s", (id, ))
+    curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    curr.execute("DELETE from tasks WHERE id =%s", (id, ))
 
+    mysql.connection.commit()
+    curr.close()
+
+    flash("削除しました", "warning")
+    redirect(url_for("user_todo"))
+
+    return render_template('user_todo.html', title='おぼえがき一覧')
+
+#編集処理
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    form = TaksForm(request.form)
+    if request.method == "POST":
+        title = form.title.data
+        detail = form.detail.data
+        update_at = datetime.datetime.today()
+
+        curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curr.execute("UPDATE tasks SET title = %s, detail = %s, update_at = %s WHERE id = %s", (title, detail, update_at, id))
         mysql.connection.commit()
         curr.close()
 
-        flash("削除しました", "warning")
-        redirect(url_for("user_todo"))
+        return redirect(url_for("user_todo"))
+    
+    curr = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    curr.execute("SELECT * FROM tasks WHERE id=%s", (id, ))
+    tasks = curr.fetchall()
 
-        return render_template('user_todo.html', title='おぼえがき一覧')
+    mysql.connection.commit()
+    curr.close()
 
-@app.route('/edit')
-def edit():
-    return render_template('edit.html')
+    return render_template('edit.html', title='編集', form=form, tasks=tasks[0])
 
 
 @app.route('/user', methods=['GET', 'POST'])
